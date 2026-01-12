@@ -9,9 +9,9 @@ import SwiftUI
 
 @main
 struct Reminder_LBTAApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  var body: some Scene {
+    WindowGroup {
+      PaymentListView()
     }
+  }
 }
