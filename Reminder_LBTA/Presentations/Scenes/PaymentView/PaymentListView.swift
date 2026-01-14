@@ -10,17 +10,16 @@ import SwiftUI
 struct PaymentListView: View {
   var body: some View {
     ZStack(alignment: .top) {
-      PaymentHeaderView()
+      PaymentHeaderView(content: .init(amount: "122 546 $", title: "Payments", image: "calendar", pageType: .payments)) {
+        
+      }
       
       ScrollView(showsIndicators: false) {
-        PaymentContentHeaderView()
-        
         VStack(spacing: 16) {
           PaymentCardView()
           PaymentCardView()
-          PaymentCardView()
-          PaymentCardView()
         }
+        .padding(.bottom, 10)
       }
       .padding(.top, 120)
     }

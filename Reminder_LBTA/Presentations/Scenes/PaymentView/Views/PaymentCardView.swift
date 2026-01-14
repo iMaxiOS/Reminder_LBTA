@@ -45,11 +45,11 @@ struct PaymentCardView: View {
       }
       
       HStack {
-        FullButton(text: "Pay") {
+        SolidButton(text: "Pay", textColor: .appYellow, solidColor: .appYellow, isFull: true) {
           
         }
         
-        FullButton(text: "More details", isStroke: true) {
+        SolidButton(text: "More details", textColor: .appYellow, solidColor: .appYellow) {
           
         }
       }

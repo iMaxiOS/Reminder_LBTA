@@ -8,26 +8,40 @@
 
 import SwiftUI
 
+struct HeaderContent {
+  var amount: String
+  var title: String
+  var image: String
+  var date: Date = .now
+  var pageType: TabType
+}
+
 struct PaymentHeaderView: View {
+  var content: HeaderContent
+  var closure: () -> Void
+  
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
       HStack {
-        Text("723 455 $")
+        Text(content.amount)
           .cygre(.regular, 27)
+        
         Spacer()
+        
         Button {
-          
+          closure()
         } label: {
-          Image(systemName: "plus.circle")
+          Image(systemName: content.image)
             .foregroundStyle(.appYellow)
             .font(.title)
         }
+        .offset(y: content.pageType == .payments ? 50 : 0)
       }
       
       VStack(alignment: .leading, spacing: -8) {
-        Text("Total amounts")
+        Text(content.title)
           .cygre(.black, 32)
-        Text("15 December")
+        Text(content.date, style: .date)
           .cygre(.regular, 16)
       }
       .foregroundStyle(.appYellow)
@@ -37,5 +51,5 @@ struct PaymentHeaderView: View {
 }
 
 #Preview {
-  PaymentHeaderView()
+  PaymentHeaderView(content: .init(amount: "34 234 $", title: "Total amounts", image: "plus.circle", pageType: .main), closure: {})
 }

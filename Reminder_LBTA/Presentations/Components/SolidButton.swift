@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct FullButton: View {
+struct SolidButton: View {
   var text: String
-  var isStroke: Bool = false
+  var textColor: Color
+  var solidColor: Color
+  var isFull: Bool = false
   var closure: () -> Void
   
   var body: some View {
@@ -18,31 +20,22 @@ struct FullButton: View {
     } label: {
       Text(text)
         .cygre(.regular)
-        .foregroundColor(.primary)
         .padding(.top, 12)
         .padding(.bottom, 16)
         .frame(maxWidth: .infinity)
-        .background(
-          ZStack {
-            if isStroke {
-              Capsule()
-                .fill(.appRed)
-              Capsule()
-                .stroke(.black, lineWidth: 1)
-            } else {
-              Capsule()
-                .fill(.appBack)
-              
-            }
-          }
-        )
+        .foregroundColor(isFull ? .appBack : textColor)
+        .background(isFull ? solidColor : .appBack)
         .clipShape(.capsule)
+        .overlay {
+          Capsule()
+            .stroke(solidColor, lineWidth: 1)
+        }
     }
     .buttonStyle(.plain)
   }
 }
 
 #Preview {
-  FullButton(text: "Pay", closure: { })
+  SolidButton(text: "Payment", textColor: .appBack, solidColor: .appYellow, closure: { })
     .padding()
 }
