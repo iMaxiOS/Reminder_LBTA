@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct MainView: View {
+  @State private var isShowAddPayment: Bool = false
+  
     var body: some View {
       ZStack(alignment: .top) {
         PaymentHeaderView(content: .init(amount: "213 546 $", title: "Total amounts", image: "plus.circle", pageType: .main)) {
-          
+          isShowAddPayment.toggle()
         }
         
         ScrollView(showsIndicators: false) {
@@ -30,6 +32,9 @@ struct MainView: View {
       }
       .padding(.horizontal)
       .background(.appBack)
+      .sheet(isPresented: $isShowAddPayment) {
+        AddPaymentView()
+      }
     }
 }
 

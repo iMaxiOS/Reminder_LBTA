@@ -49,7 +49,7 @@ struct PaymentCardView: View {
           
         }
         
-        SolidButton(text: "More details", textColor: .appYellow, solidColor: .appYellow) {
+        SolidButton(text: "More details", textColor: .appYellow, backgroundColor: .clear, solidColor: .appYellow) {
           
         }
       }

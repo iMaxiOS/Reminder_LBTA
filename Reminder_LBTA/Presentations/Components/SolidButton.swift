@@ -10,6 +10,7 @@ import SwiftUI
 struct SolidButton: View {
   var text: String
   var textColor: Color
+  var backgroundColor: Color = .appBack
   var solidColor: Color
   var isFull: Bool = false
   var closure: () -> Void
@@ -24,7 +25,7 @@ struct SolidButton: View {
         .padding(.bottom, 16)
         .frame(maxWidth: .infinity)
         .foregroundColor(isFull ? .appBack : textColor)
-        .background(isFull ? solidColor : .appBack)
+        .background(isFull ? solidColor : backgroundColor)
         .clipShape(.capsule)
         .overlay {
           Capsule()
