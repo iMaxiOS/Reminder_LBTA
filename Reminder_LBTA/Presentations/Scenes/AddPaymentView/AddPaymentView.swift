@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum ChangeState {
+enum ChangeState: Int {
   case oneTime
   case monthly
 }
@@ -17,6 +17,7 @@ struct AddPaymentView: View {
   @State private var changeState: ChangeState = .oneTime
   @State private var isShowCalendar: Bool = false
   @State private var date: Date = Date.now
+  @State private var viewModel: AddViewModel = Assembly.createAddViewModel()
   
   var body: some View {
     ZStack {
@@ -133,7 +134,7 @@ struct AddPaymentView: View {
       .padding(.bottom, 60)
       .overlay(alignment: .bottom) {
         SolidButton(text: "Add", textColor: .appBack, solidColor: .appYellow, isFull: true) {
-          
+          viewModel.createNewPayment()
         }
         .padding(.horizontal, 16)
       }
