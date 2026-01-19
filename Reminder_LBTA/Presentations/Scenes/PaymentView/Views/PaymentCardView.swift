@@ -8,24 +8,26 @@
 import SwiftUI
 
 struct PaymentCardView: View {
+  var payment: Payment
+  
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
       VStack(alignment: .leading) {
-        Text("Debts for credit")
+        Text(payment.title)
           .cygre(.black, 24)
         HStack {
-          Text("$ 32,500  /")
+          Text("$ \(payment.totalAmount - payment.paymentAmount)  /")
             .cygre(.black, 12)
           Text("remainder")
             .cygre(.regular, 12)
         }
       }
       
-      Text("This course will help you to get a job in 3 months.")
+      Text(payment.descriptionText)
         .cygre(.regular, 14)
       
       HStack {
-        Text("$ 32,500  /")
+        Text("$ \(payment.paymentAmount)  /")
           .cygre(.black, 18)
         Text("Month")
           .cygre(.regular, 18)
@@ -33,7 +35,7 @@ struct PaymentCardView: View {
         HStack {
           Text("pay before")
             .cygre(.regular, 12)
-          Text("21.12")
+          Text("\(payment.dueDay)")
             .cygre(.black, 12)
         }
         .foregroundStyle(.primary)
@@ -45,11 +47,11 @@ struct PaymentCardView: View {
       }
       
       HStack {
-        SolidButton(text: "Pay", textColor: .appYellow, solidColor: .appYellow, isFull: true) {
+        SolidButton(text: "Pay", textColor: Color(.secondarySystemBackground), solidColor: .primary, isFull: true) {
           
         }
         
-        SolidButton(text: "More details", textColor: .appYellow, backgroundColor: .clear, solidColor: .appYellow) {
+        SolidButton(text: "More details", textColor: .primary, backgroundColor: .clear, solidColor: .primary) {
           
         }
       }
@@ -62,5 +64,5 @@ struct PaymentCardView: View {
 }
 
 #Preview {
-  PaymentCardView()
+  PaymentCardView(payment: .init(id: "1", title: "title", type: .monthly, descriptionText: "description", totalAmount: 100, paymentAmount: 10, dueDay: -1, isNotificationEnable: true, createAt: .now))
 }

@@ -16,8 +16,8 @@ struct PaymentListView: View {
       
       ScrollView(showsIndicators: false) {
         VStack(spacing: 16) {
-          PaymentCardView()
-          PaymentCardView()
+//          PaymentCardView()
+//          PaymentCardView()
         }
         .padding(.bottom, 10)
       }

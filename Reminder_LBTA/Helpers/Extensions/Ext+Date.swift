@@ -22,4 +22,15 @@ extension Date {
   var day: Int {
     Calendar.current.component(.day, from: self)
   }
+  
+  var startOfMonth: Date {
+    let calendar = Calendar.current
+    let components = calendar.dateComponents([.year, .month], from: self)
+    return calendar.date(from: components)!
+  }
+  
+  var endOfMonth: Date {
+    let calendar = Calendar.current
+    return calendar.date(byAdding: .month, value: 1, to: startOfMonth)!
+  }
 }

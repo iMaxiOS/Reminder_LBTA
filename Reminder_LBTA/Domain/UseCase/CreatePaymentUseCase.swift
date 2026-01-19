@@ -22,3 +22,4 @@ class CreatePaymentUseCaseImp: CreatePaymentUseCase {
     try repository.create(payment: payment)
   }
 }
+

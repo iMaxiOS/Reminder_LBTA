@@ -18,7 +18,7 @@ struct MainTabView: View {
   
   var body: some View {
     TabView(selection: $selected) {
-      MainView()
+      MainView(vm: Assembly.fetchPayments())
         .tabItem {
           Label("Main", systemImage: "house")
         }

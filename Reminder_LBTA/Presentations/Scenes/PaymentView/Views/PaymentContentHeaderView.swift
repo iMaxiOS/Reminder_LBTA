@@ -8,22 +8,26 @@
 import SwiftUI
 
 struct PaymentContentHeaderView: View {
+  @Binding var payType: PayType
+  
   var body: some View {
     VStack(alignment: .leading, spacing: 4) {
       HStack(spacing: 16) {
         Text("Debts")
           .cygre(.black, 16)
           .foregroundStyle(.appYellow)
+        
         Spacer()
+        
         Button {
-          
+          payType = .monthly
         } label: {
           Text("Monthly")
         }
         .buttonStyle(.plain)
         
         Button {
-          
+          payType = .oneTime
         } label: {
           Text("One-Time")
         }
@@ -43,5 +47,5 @@ struct PaymentContentHeaderView: View {
 }
 
 #Preview {
-  PaymentContentHeaderView()
+  PaymentContentHeaderView(payType: .constant(.monthly))
 }

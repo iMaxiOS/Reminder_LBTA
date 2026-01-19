@@ -9,12 +9,10 @@ import SwiftUI
 
 @main
 struct Reminder_LBTAApp: App {
+  
   var body: some Scene {
     WindowGroup {
-      MainView()
-        .onAppear {
-          print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
-        }
+      MainView(vm: Assembly.fetchPayments())
     }
   }
 }
