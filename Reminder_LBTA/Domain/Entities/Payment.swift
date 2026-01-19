@@ -10,12 +10,13 @@ import Foundation
 struct Payment: Identifiable {
   var id: String
   var title: String
-  var type: ChangeState
+  var type: PayType
   var descriptionText: String
   var totalAmount: Double
   var paymentAmount: Double
-  var dueDay: Int16?
+  var dueDay: Int
   var dueDate: Date?
   var isNotificationEnable: Bool
   var createAt: Date
+  var lastPay: Date?
 }

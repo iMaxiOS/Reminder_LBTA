@@ -2,7 +2,7 @@
 //  PaymentEntity+CoreDataClass.swift
 //  Reminder_LBTA
 //
-//  Created by Maxim Hranchenko on 17.01.2026.
+//  Created by Maxim Hranchenko on 19.01.2026.
 //
 //
 
@@ -24,16 +24,17 @@ extension PaymentEntity {
         return NSFetchRequest<PaymentEntity>(entityName: "PaymentEntity")
     }
 
-    @NSManaged public var id: String?
-    @NSManaged public var title: String?
-    @NSManaged public var type: Int16
-    @NSManaged public var descriptionText: String?
-    @NSManaged public var totalAmount: Double
-    @NSManaged public var paymentAmount: Double
-    @NSManaged public var dueDay: Int16
+    @NSManaged public var createAt: Date
+    @NSManaged public var descriptionText: String
     @NSManaged public var dueDate: Date?
+    @NSManaged public var dueDay: Int16
+    @NSManaged public var id: String
     @NSManaged public var isNotificationEnable: Bool
-    @NSManaged public var createAt: Date?
+    @NSManaged public var paymentAmount: Double
+    @NSManaged public var title: String
+    @NSManaged public var totalAmount: Double
+    @NSManaged public var type: Int16
+    @NSManaged public var lastPay: Date?
 
 }
 

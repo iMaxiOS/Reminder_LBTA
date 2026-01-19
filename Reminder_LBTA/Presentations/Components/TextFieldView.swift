@@ -8,24 +8,36 @@
 import SwiftUI
 
 struct TextFieldView: View {
-  var title: String
+  
+  enum TextFieldType: Hashable {
+    case name
+    case payment
+    case total
+    case about
+  }
+  
+  var placeholder: String
   var isTextEditorView: Bool = true
+  var textFieldType: TextFieldType = .name
+  
+  @Binding var text: String
   
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
-      Text(title)
+      Text(placeholder)
         .cygre(.regular, 16)
       
       if isTextEditorView {
-        TextField("", text: .constant(""))
+        TextField("", text: $text)
           .cygre(.regular, 16)
           .padding(.vertical, 13)
           .padding(.horizontal, 10)
           .foregroundColor(.secondary)
           .background(.primary.opacity(0.2))
           .clipShape(.rect(cornerRadius: 25))
+          .keyboardType(textFieldType == .name || textFieldType == .about ? .default : .decimalPad)
       } else {
-        TextEditor(text: .constant(""))
+        TextEditor(text: $text)
           .cygre(.regular, 16)
           .padding(.horizontal, 10)
           .padding(.vertical, 5)
