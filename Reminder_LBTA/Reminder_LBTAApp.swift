@@ -7,12 +7,25 @@
 
 import SwiftUI
 
+enum NavigationType: Hashable {
+  case detail(payment: Payment)
+}
+
 @main
 struct Reminder_LBTAApp: App {
+  @State private var path: NavigationPath = .init()
   
   var body: some Scene {
     WindowGroup {
-      MainView(vm: Assembly.fetchPayments())
+      NavigationStack(path: $path) {
+        MainTabView(path: $path)
+          .navigationDestination(for: NavigationType.self) { item in
+            switch item {
+            case .detail(let payment):
+              PaymentDetailView(path: $path, payment: payment)
+            }
+          }
+      }
     }
   }
 }

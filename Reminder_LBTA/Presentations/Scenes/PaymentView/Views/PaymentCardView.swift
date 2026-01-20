@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct PaymentCardView: View {
+  @Binding var path: NavigationPath
+  
   var payment: Payment
+  var closure: () -> Void
   
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
@@ -16,7 +19,7 @@ struct PaymentCardView: View {
         Text(payment.title)
           .cygre(.black, 24)
         HStack {
-          Text("$ \(payment.totalAmount - payment.paymentAmount)  /")
+          Text("$ \(String(format: "%.2f", payment.totalAmount - payment.paymentAmount))  /")
             .cygre(.black, 12)
           Text("remainder")
             .cygre(.regular, 12)
@@ -27,7 +30,7 @@ struct PaymentCardView: View {
         .cygre(.regular, 14)
       
       HStack {
-        Text("$ \(payment.paymentAmount)  /")
+        Text("$ \(String(format: "%.2f", payment.paymentAmount))  /")
           .cygre(.black, 18)
         Text("Month")
           .cygre(.regular, 18)
@@ -48,11 +51,11 @@ struct PaymentCardView: View {
       
       HStack {
         SolidButton(text: "Pay", textColor: Color(.secondarySystemBackground), solidColor: .primary, isFull: true) {
-          
+          closure()
         }
         
         SolidButton(text: "More details", textColor: .primary, backgroundColor: .clear, solidColor: .primary) {
-          
+          closure()
         }
       }
     }
@@ -64,5 +67,18 @@ struct PaymentCardView: View {
 }
 
 #Preview {
-  PaymentCardView(payment: .init(id: "1", title: "title", type: .monthly, descriptionText: "description", totalAmount: 100, paymentAmount: 10, dueDay: -1, isNotificationEnable: true, createAt: .now))
+  PaymentCardView(
+    path: .constant(.init()),
+    payment: .init(
+      id: "1",
+      title: "Spotify Premium",
+      type: .monthly,
+      descriptionText: "Family plan for 6 accounts",
+      totalAmount: 120,
+      paymentAmount: 10,
+      dueDay: 15,
+      isNotificationEnable: true,
+      createAt: .now
+    ), closure: {}
+  )
 }

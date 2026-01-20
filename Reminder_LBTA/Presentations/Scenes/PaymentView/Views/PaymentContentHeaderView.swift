@@ -23,6 +23,8 @@ struct PaymentContentHeaderView: View {
           payType = .monthly
         } label: {
           Text("Monthly")
+            .foregroundStyle(payType == .monthly ? .primary : .secondary)
+            .cygre(payType == .monthly ? .black : .regular)
         }
         .buttonStyle(.plain)
         
@@ -30,6 +32,8 @@ struct PaymentContentHeaderView: View {
           payType = .oneTime
         } label: {
           Text("One-Time")
+            .foregroundStyle(payType == .oneTime ? .primary : .secondary)
+            .cygre(payType == .oneTime ? .black : .regular)
         }
         .buttonStyle(.plain)
       }

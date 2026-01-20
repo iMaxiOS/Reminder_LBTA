@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct MainView: View {
+  @Binding var path: NavigationPath
+  
   @StateObject var vm: MainViewModel
   @State private var isShowAddPayment: Bool = false
   @State private var payType: PayType = .monthly
   
+  
     var body: some View {
       ZStack(alignment: .top) {
-        PaymentHeaderView(content: .init(amount: "213 546 $", title: "Total amounts", image: "plus.circle", pageType: .main)) {
+        PaymentHeaderView(content: .init(amount: "213 546 $", title: "Total amounts", image: "plus.circle", pageType: .main), closure: {
           isShowAddPayment.toggle()
-        }
+        }, date: .constant(.now))
         
         ScrollView(showsIndicators: false) {
           PaymentContentHeaderView(payType: $payType)
@@ -24,12 +27,16 @@ struct MainView: View {
           LazyVStack(spacing: 16) {
             switch payType {
             case .monthly:
-              ForEach(vm.payments.filter { $0.type == .monthly}) { item in
-                PaymentCardView(payment: item)
+              ForEach(vm.payments.filter { $0.type == .monthly }) { payment in
+                PaymentCardView(path: $path, payment: payment, closure: {
+                  path.append(NavigationType.detail(payment: payment))
+                })
               }
             case .oneTime:
-              ForEach(vm.payments.filter { $0.type == .oneTime}) { item in
-                PaymentCardView(payment: item)
+              ForEach(vm.payments.filter { $0.type == .oneTime }) { payment in
+                PaymentCardView(path: $path, payment: payment, closure: {
+                  path.append(NavigationType.detail(payment: payment))
+                })
               }
             }
           }
@@ -49,5 +56,6 @@ struct MainView: View {
 }
 
 #Preview {
-  MainView(vm: Assembly.fetchPayments())
+  MainView(path: .constant(.init()), vm: Assembly.fetchPayments())
 }
+

@@ -7,31 +7,32 @@
 
 import SwiftUI
 
-enum TabType: Hashable {
+enum PageType: Hashable {
   case main
   case payments
 }
 
 struct MainTabView: View {
+  @Binding var path: NavigationPath
   
-  @State private var selected: TabType = .main
+  @State private var selected: PageType = .main
   
   var body: some View {
     TabView(selection: $selected) {
-      MainView(vm: Assembly.fetchPayments())
+      MainView(path: $path, vm: Assembly.fetchPayments())
         .tabItem {
           Label("Main", systemImage: "house")
         }
       
-      PaymentListView()
+      PaymentListView(path: $path)
         .tabItem {
           Label("Payment", systemImage: "list.bullet.clipboard")
         }
     }
-    .accentColor(.appYellow)
+    .tint(.accent)
   }
 }
 
 #Preview {
-  MainTabView()
+  MainTabView(path: .constant(.init()))
 }
