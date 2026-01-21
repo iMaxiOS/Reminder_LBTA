@@ -106,7 +106,7 @@ private extension PaymentDetailView {
         HStack {
           Text("paid")
             .cygre(.regular, 12)
-          Text("\(payment.dueDay)")
+          Text(payment.lastPay?.dateMonthString ?? "Don`t pay")
             .cygre(.black, 12)
         }
         .foregroundStyle(.primary)

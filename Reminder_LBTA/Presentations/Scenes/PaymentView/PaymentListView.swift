@@ -20,6 +20,8 @@ struct PaymentListView: View {
         LazyVStack(spacing: 16) {
           ForEach(vm.payments) { payment in
             PaymentCardView(path: $path, payment: payment) {
+              //set 
+            } moreHandle: {
               path.append(NavigationType.detail(payment: payment))
             }
           }

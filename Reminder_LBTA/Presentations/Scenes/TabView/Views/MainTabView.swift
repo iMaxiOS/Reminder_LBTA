@@ -26,7 +26,7 @@ struct MainTabView: View {
       
       PaymentListView(path: $path, vm: Assembly.fetchPayments())
         .tabItem {
-          Label("Payment", systemImage: "list.bullet.clipboard")
+          Label("Payments", systemImage: "list.bullet.clipboard")
         }
     }
     .tint(.accent)

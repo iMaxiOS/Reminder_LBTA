@@ -9,10 +9,15 @@ import Foundation
 
 class Assembly {
   static func fetchPayments() -> MainViewModel {
-    let manager = FetchPaymentManager()
-    let repository = FetchPaymentRepositoryImp(dataSource: manager)
+    let fetchManager = FetchPaymentManager()
+    let repository = FetchPaymentRepositoryImp(dataSource: fetchManager)
     let useCase = FetchPaymentUseCaseImp(repository: repository)
-    return MainViewModel(useCase: useCase)
+    
+    let setManager = SetPaymentManager()
+    let repo = SetPaymentRepositoryImp(dataSource: setManager)
+    let userCase = SetPaymentUseCaseImp(repository: repo)
+    
+    return MainViewModel(useCase: useCase, setUseCase: userCase)
   }
   
   static func fetchPayments() -> PaymentsViewModel {

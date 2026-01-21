@@ -11,7 +11,8 @@ struct PaymentCardView: View {
   @Binding var path: NavigationPath
   
   var payment: Payment
-  var closure: () -> Void
+  var setHandle: () -> Void
+  var moreHandle: () -> Void
   
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
@@ -34,12 +35,21 @@ struct PaymentCardView: View {
           .cygre(.black, 18)
         Text("Month")
           .cygre(.regular, 18)
+        
         Spacer()
+        
         HStack {
-          Text("pay before")
-            .cygre(.regular, 12)
-          Text("\(payment.dueDay)")
-            .cygre(.black, 12)
+//          if payment.lastPay != nil {
+//            Text("Paid")
+//              .cygre(.regular, 12)
+//            Text(payment.lastPay?.dateMonthString ?? "")
+//              .cygre(.black, 12)
+//          } else {
+            Text("pay before")
+              .cygre(.regular, 12)
+            Text(payment.dueDate?.dateMonthString ?? "")
+              .cygre(.black, 12)
+//          }
         }
         .foregroundStyle(.primary)
         .padding(.vertical, 1)
@@ -51,11 +61,11 @@ struct PaymentCardView: View {
       
       HStack {
         SolidButton(text: "Pay", textColor: Color(.secondarySystemBackground), solidColor: .primary, isFull: true) {
-          closure()
+          setHandle()
         }
         
         SolidButton(text: "More details", textColor: .primary, backgroundColor: .clear, solidColor: .primary) {
-          closure()
+          moreHandle()
         }
       }
     }
@@ -80,6 +90,8 @@ struct PaymentCardView: View {
       dueDay: 15,
       isNotificationEnable: true,
       createAt: .now
-    ), closure: {}
+    ),
+    setHandle: {},
+    moreHandle: {}
   )
 }

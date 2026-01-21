@@ -28,15 +28,23 @@ struct MainView: View {
             switch payType {
             case .monthly:
               ForEach(vm.payments.filter { $0.type == .monthly }) { payment in
-                PaymentCardView(path: $path, payment: payment, closure: {
+                PaymentCardView(path: $path, payment: payment) {
+                  Task {
+                    await vm.set(payment: payment)
+                  }
+                } moreHandle: {
                   path.append(NavigationType.detail(payment: payment))
-                })
+                }
               }
             case .oneTime:
               ForEach(vm.payments.filter { $0.type == .oneTime }) { payment in
-                PaymentCardView(path: $path, payment: payment, closure: {
+                PaymentCardView(path: $path, payment: payment) {
+                  Task {
+                    await vm.set(payment: payment)
+                  }
+                } moreHandle: {
                   path.append(NavigationType.detail(payment: payment))
-                })
+                }
               }
             }
           }
