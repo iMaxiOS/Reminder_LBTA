@@ -8,9 +8,10 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="isNotificationEnable" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastPay" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="paymentAmount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="paymentAmount" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="remainingAmout" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="title" attributeType="String"/>
-        <attribute name="totalAmount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalAmount" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
 </model>

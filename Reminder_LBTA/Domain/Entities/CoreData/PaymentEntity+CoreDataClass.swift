@@ -2,7 +2,7 @@
 //  PaymentEntity+CoreDataClass.swift
 //  Reminder_LBTA
 //
-//  Created by Maxim Hranchenko on 19.01.2026.
+//  Created by Maxim Hranchenko on 20.01.2026.
 //
 //
 
@@ -15,6 +15,7 @@ public typealias PaymentEntityCoreDataClassSet = NSSet
 public class PaymentEntity: NSManagedObject {
 
 }
+
 
 public typealias PaymentEntityCoreDataPropertiesSet = NSSet
 
@@ -30,11 +31,12 @@ extension PaymentEntity {
     @NSManaged public var dueDay: Int16
     @NSManaged public var id: String
     @NSManaged public var isNotificationEnable: Bool
-    @NSManaged public var paymentAmount: Double
-    @NSManaged public var title: String
-    @NSManaged public var totalAmount: Double
-    @NSManaged public var type: Int16
     @NSManaged public var lastPay: Date?
+    @NSManaged public var paymentAmount: NSDecimalNumber
+    @NSManaged public var title: String
+    @NSManaged public var totalAmount: NSDecimalNumber
+    @NSManaged public var type: Int16
+    @NSManaged public var remainingAmout: NSDecimalNumber
 
 }
 

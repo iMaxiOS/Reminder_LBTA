@@ -12,8 +12,9 @@ struct Payment: Identifiable, Hashable {
   var title: String
   var type: PayType
   var descriptionText: String
-  var totalAmount: Double
-  var paymentAmount: Double
+  var totalAmount: Decimal
+  var paymentAmount: Decimal
+  var remainingAmount: Decimal
   var dueDay: Int
   var dueDate: Date?
   var isNotificationEnable: Bool

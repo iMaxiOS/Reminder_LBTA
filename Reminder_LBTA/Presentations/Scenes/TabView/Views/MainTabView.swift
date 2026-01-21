@@ -24,7 +24,7 @@ struct MainTabView: View {
           Label("Main", systemImage: "house")
         }
       
-      PaymentListView(path: $path)
+      PaymentListView(path: $path, vm: Assembly.fetchPayments())
         .tabItem {
           Label("Payment", systemImage: "list.bullet.clipboard")
         }

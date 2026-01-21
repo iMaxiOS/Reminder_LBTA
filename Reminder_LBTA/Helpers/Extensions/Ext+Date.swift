@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 extension Date {
   static let dayMonthFormat: DateFormatter = {
     let formatter = DateFormatter()
@@ -34,14 +35,30 @@ extension Date {
     Calendar.current.component(.day, from: self)
   }
   
+  var month: Int {
+    Calendar.current.component(.month, from: self)
+  }
+  
   var startOfMonth: Date {
     let calendar = Calendar.current
     let components = calendar.dateComponents([.year, .month], from: self)
     return calendar.date(from: components)!
   }
   
+  var dateMonthString: String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd.MM"
+    return formatter.string(from: self)
+  }
+  
   var endOfMonth: Date {
     let calendar = Calendar.current
     return calendar.date(byAdding: .month, value: 1, to: startOfMonth)!
+  }
+  
+  func isInSameMonth(date: Date) -> Bool {
+    let calendar = Calendar.current
+    return calendar.component(.month, from: self) == calendar.component(.month, from: date) &&
+           calendar.component(.year, from: self) == calendar.component(.year, from: date)
   }
 }

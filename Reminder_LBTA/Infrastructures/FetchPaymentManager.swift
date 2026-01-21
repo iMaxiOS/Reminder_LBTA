@@ -16,12 +16,13 @@ class FetchPaymentManager: FetchPaymentDataSource {
     let fetchRequest = PaymentEntity.fetchRequest()
     
     if let date {
-      let predicate = NSPredicate(format: "lastDay >= %@ AND lastDay < %@",
+      let predicate = NSPredicate(format: "lastPay >= %@ AND lastPay < %@",
                                   date.startOfMonth as NSDate,
                                   date.endOfMonth as NSDate)
       fetchRequest.predicate = predicate
     }
     
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "createAt", ascending: false)]
     let payments = try context.fetch(fetchRequest)
     let domainPayments = payments.map { payment in
       PaymentMapper.toDomain(from: payment)

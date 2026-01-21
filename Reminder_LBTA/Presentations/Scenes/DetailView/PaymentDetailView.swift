@@ -24,7 +24,7 @@ struct PaymentDetailView: View {
         solidButtons
       }
       .padding(.horizontal)
-      .navigationTitle(Text("Payment Details"))
+      .navigationTitle(Text("Payment Detail"))
       .toolbar {
         ToolbarItem(placement: .topBarTrailing) {
           Button {
@@ -40,14 +40,14 @@ struct PaymentDetailView: View {
 }
 
 #Preview {
-  PaymentDetailView(path: .constant(.init()), payment: .init(id: "1", title: "Spotify Premium", type: .monthly, descriptionText: "Family plan for 6 accounts", totalAmount: 120, paymentAmount: 10, dueDay: 15, isNotificationEnable: true, createAt: .now))
+  PaymentDetailView(path: .constant(.init()), payment: .init(id: "1", title: "Spotify Premium", type: .monthly, descriptionText: "Family plan for 6 accounts", totalAmount: 120, paymentAmount: 10, remainingAmount: 10000, dueDay: 15, isNotificationEnable: true, createAt: .now))
 }
 
 private extension PaymentDetailView {
   var highSection: some View {
     VStack(alignment: .leading) {
       VStack(alignment: .leading, spacing: -6) {
-        Text("231 323 $")
+        Text("$ \(payment.totalAmount.formatterWithoutDecimal)")
           .cygre(.regular, 27)
           .foregroundStyle(.primary)
         
@@ -57,26 +57,28 @@ private extension PaymentDetailView {
       }
       
       VStack(alignment: .leading, spacing: 16) {
-        HStack(spacing: 16) {
-          Text("$ \(String(format: "%.2f", payment.totalAmount))")
-            .cygre(.medium, 20)
-            .padding([.bottom, .horizontal], 15)
-            .padding(.top, 10)
-            .overlay {
-              Capsule()
-                .stroke(.appYellow, lineWidth: 1)
-            }
-          
-          Text("$ \(String(format: "%.2f", payment.paymentAmount))")
-            .cygre(.medium, 20)
-            .padding([.bottom, .horizontal], 15)
-            .padding(.top, 10)
-            .overlay {
-              Capsule()
-                .stroke(.appYellow, lineWidth: 1)
-            }
+        if payment.type == .monthly {
+          HStack(spacing: 16) {
+            Text("$ \(payment.remainingAmount.formatterWithoutDecimal)")
+              .cygre(.medium, 20)
+              .padding([.bottom, .horizontal], 15)
+              .padding(.top, 10)
+              .overlay {
+                Capsule()
+                  .stroke(.appYellow, lineWidth: 1)
+              }
+            
+            Text("$ \(payment.paymentAmount.formatterWithoutDecimal)")
+              .cygre(.medium, 20)
+              .padding([.bottom, .horizontal], 15)
+              .padding(.top, 10)
+              .overlay {
+                Capsule()
+                  .stroke(.appYellow, lineWidth: 1)
+              }
+          }
+          .padding(.top)
         }
-        .padding(.top)
         
         Text(payment.descriptionText)
           .lineLimit(3)

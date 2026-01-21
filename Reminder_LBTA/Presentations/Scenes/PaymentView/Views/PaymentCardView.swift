@@ -19,7 +19,7 @@ struct PaymentCardView: View {
         Text(payment.title)
           .cygre(.black, 24)
         HStack {
-          Text("$ \(String(format: "%.2f", payment.totalAmount - payment.paymentAmount))  /")
+          Text("$ \(payment.totalAmount.formatterWithoutDecimal)  /")
             .cygre(.black, 12)
           Text("remainder")
             .cygre(.regular, 12)
@@ -30,7 +30,7 @@ struct PaymentCardView: View {
         .cygre(.regular, 14)
       
       HStack {
-        Text("$ \(String(format: "%.2f", payment.paymentAmount))  /")
+        Text("$ \(payment.paymentAmount.formatterWithoutDecimal)  /")
           .cygre(.black, 18)
         Text("Month")
           .cygre(.regular, 18)
@@ -76,6 +76,7 @@ struct PaymentCardView: View {
       descriptionText: "Family plan for 6 accounts",
       totalAmount: 120,
       paymentAmount: 10,
+      remainingAmount: 15,
       dueDay: 15,
       isNotificationEnable: true,
       createAt: .now

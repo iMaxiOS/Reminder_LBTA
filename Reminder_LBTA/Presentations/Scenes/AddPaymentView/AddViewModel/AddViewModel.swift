@@ -20,6 +20,7 @@ class AddViewModel: ObservableObject {
   @Published var description: String = ""
   @Published var paymentAmount: String = ""
   @Published var totalAmount: String = ""
+  @Published var remainingAmount: String = ""
   
   init(createUseCase: CreatePaymentUseCase) {
     self.createUseCase = createUseCase
@@ -32,8 +33,9 @@ class AddViewModel: ObservableObject {
         title: paymentName,
         type: payType,
         descriptionText: description,
-        totalAmount: Double(totalAmount) ?? 0,
-        paymentAmount: Double(paymentAmount) ?? 0,
+        totalAmount: Decimal(string: totalAmount) ?? 0,
+        paymentAmount: Decimal(string: paymentAmount) ?? 0,
+        remainingAmount: Decimal(string: remainingAmount) ?? 0,
         dueDay: date.day,
         dueDate: date,
         isNotificationEnable: isPaymentNotification,

@@ -16,8 +16,9 @@ struct PaymentMapper {
       title: entity.title,
       type: PayType(rawValue: Int(entity.type)) ?? .monthly,
       descriptionText: entity.descriptionText,
-      totalAmount: entity.totalAmount,
-      paymentAmount: entity.paymentAmount,
+      totalAmount: entity.totalAmount as Decimal,
+      paymentAmount: entity.paymentAmount as Decimal,
+      remainingAmount: entity.remainingAmout as Decimal,
       dueDay: Int(entity.dueDay),
       dueDate: entity.dueDate,
       isNotificationEnable: entity.isNotificationEnable,
@@ -32,8 +33,9 @@ struct PaymentMapper {
     entity.title = payment.title
     entity.type = Int16(payment.type.rawValue)
     entity.descriptionText = payment.descriptionText
-    entity.totalAmount = payment.totalAmount
-    entity.paymentAmount = payment.paymentAmount
+    entity.totalAmount = payment.totalAmount as NSDecimalNumber
+    entity.paymentAmount = payment.paymentAmount as NSDecimalNumber
+    entity.remainingAmout = payment.remainingAmount as NSDecimalNumber
     entity.dueDay = Int16(payment.dueDay)
     entity.dueDate = payment.dueDate
     entity.isNotificationEnable = payment.isNotificationEnable
