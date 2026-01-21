@@ -67,7 +67,7 @@ struct PaymentHeaderView: View {
       VStack(alignment: .leading, spacing: -8) {
         Text(content.title)
           .cygre(.black, 32)
-        Text(date?.withoutDayMonthYear ?? "")
+        Text(date?.fullDayAndMonthString ?? "")
           .cygre(.regular, 16)
       }
       .foregroundStyle(.appYellow)

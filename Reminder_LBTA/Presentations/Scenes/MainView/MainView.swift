@@ -17,12 +17,21 @@ struct MainView: View {
   
     var body: some View {
       ZStack(alignment: .top) {
-        PaymentHeaderView(content: .init(amount: "213 546 $", title: "Total amounts", image: "plus.circle", pageType: .main), closure: {
+        PaymentHeaderView(content: .init(
+          amount: vm.totalRemainderAmount.formatterWithoutDecimal,
+          title: "Total amounts",
+          image: "plus.circle",
+          pageType: .main
+        ), closure: {
           isShowAddPayment.toggle()
         }, date: .constant(.now))
         
         ScrollView(showsIndicators: false) {
-          PaymentContentHeaderView(payType: $payType)
+          PaymentContentHeaderView(
+            payType: $payType,
+            monthAmount: $vm.oneMonthRemainderAmount,
+            oneTimeMonthAmount: $vm.oneTimeRemainderAmount
+          )
           
           LazyVStack(spacing: 16) {
             switch payType {

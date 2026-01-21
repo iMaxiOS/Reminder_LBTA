@@ -10,7 +10,12 @@ import SwiftUI
 struct PaymentDetailView: View {
   @Binding var path: NavigationPath
   
-  var payment: Payment
+  @StateObject var vm: PaymentDetailViewModel
+  
+  init(path: Binding<NavigationPath>, vm: PaymentDetailViewModel) {
+    self._path = path
+    self._vm = StateObject(wrappedValue: vm)
+  }
   
   var body: some View {
     ZStack {
@@ -40,26 +45,26 @@ struct PaymentDetailView: View {
 }
 
 #Preview {
-  PaymentDetailView(path: .constant(.init()), payment: .init(id: "1", title: "Spotify Premium", type: .monthly, descriptionText: "Family plan for 6 accounts", totalAmount: 120, paymentAmount: 10, remainingAmount: 10000, dueDay: 15, isNotificationEnable: true, createAt: .now))
+  PaymentDetailView(path: .constant(.init()), vm: PaymentDetailViewModel(payment: .init(id: "1", title: "Spotify Premium", type: .monthly, descriptionText: "Family plan for 6 accounts", totalAmount: 120, paymentAmount: 10, remainingAmount: 10000, dueDay: 15, isNotificationEnable: true, createAt: .now)))
 }
 
 private extension PaymentDetailView {
   var highSection: some View {
     VStack(alignment: .leading) {
       VStack(alignment: .leading, spacing: -6) {
-        Text("$ \(payment.totalAmount.formatterWithoutDecimal)")
+        Text(vm.payment.totalAmount.formatterWithoutDecimal)
           .cygre(.regular, 27)
           .foregroundStyle(.primary)
         
-        Text(payment.title)
+        Text(vm.payment.title)
           .cygre(.black, 16)
           .foregroundStyle(.appYellow)
       }
       
       VStack(alignment: .leading, spacing: 16) {
-        if payment.type == .monthly {
+        if vm.payment.type == .monthly {
           HStack(spacing: 16) {
-            Text("$ \(payment.remainingAmount.formatterWithoutDecimal)")
+            Text(vm.payment.remainingAmount.formatterWithoutDecimal)
               .cygre(.medium, 20)
               .padding([.bottom, .horizontal], 15)
               .padding(.top, 10)
@@ -68,7 +73,7 @@ private extension PaymentDetailView {
                   .stroke(.appYellow, lineWidth: 1)
               }
             
-            Text("$ \(payment.paymentAmount.formatterWithoutDecimal)")
+            Text(vm.payment.paymentAmount.formatterWithoutDecimal)
               .cygre(.medium, 20)
               .padding([.bottom, .horizontal], 15)
               .padding(.top, 10)
@@ -80,7 +85,7 @@ private extension PaymentDetailView {
           .padding(.top)
         }
         
-        Text(payment.descriptionText)
+        Text(vm.payment.descriptionText)
           .lineLimit(3)
           .cygre(.regular, 14)
           .padding(.top)
@@ -96,26 +101,7 @@ private extension PaymentDetailView {
         .foregroundStyle(.appYellow)
         .frame(height: 1)
       
-      HStack {
-        Text("Upcoming payment")
-          .cygre(.regular, 14)
-          .foregroundStyle(.appYellow)
-        
-        Spacer()
-        
-        HStack {
-          Text("paid")
-            .cygre(.regular, 12)
-          Text(payment.lastPay?.dateMonthString ?? "Don`t pay")
-            .cygre(.black, 12)
-        }
-        .foregroundStyle(.primary)
-        .padding(.vertical, 1)
-        .padding(.horizontal, 15)
-        .offset(y: -2)
-        .background(.appYellow)
-        .clipShape(Capsule())
-      }
+      PaymentStatus(paymentType: vm.payment.type, dueDate: vm.payment.dueDate, lastPay: vm.payment.lastPay)
       
       RoundedRectangle(cornerRadius: 1)
         .foregroundStyle(.appYellow)
@@ -133,7 +119,7 @@ private extension PaymentDetailView {
             .stroke(.yellow, lineWidth: 2)
             .frame(width: 25, height: 25)
           Circle()
-            .fill(payment.isNotificationEnable ? .appYellow : .clear)
+            .fill(vm.payment.isNotificationEnable ? .appYellow : .clear)
             .frame(width: 16, height: 16)
         }
         
@@ -147,6 +133,73 @@ private extension PaymentDetailView {
       }
       
       SolidButton(text: "Delete last payment", textColor: .appYellow, solidColor: .appYellow) {
+      }
+    }
+  }
+}
+
+struct PaymentStatus: View {
+  var paymentType: PayType
+  var dueDate: Date?
+  var lastPay: Date?
+  var isShowLabel: Bool = true
+  
+  var body: some View {
+    HStack {
+      switch paymentType {
+      case .monthly:
+        if isShowLabel {
+          Text("Upcoming payment")
+            .cygre(.regular, 14)
+            .foregroundStyle(.appYellow)
+          
+          Spacer()
+        }
+        
+        if let lastPay = lastPay, lastPay.isInSameMonth(date: .now) {
+          HStack {
+            Text("Paid")
+              .cygre(.regular, 12)
+            Text(lastPay.dateMonthString)
+              .cygre(.black, 12)
+          }
+          .foregroundStyle(.primary)
+          .padding(.vertical, 1)
+          .padding(.horizontal, 15)
+          .offset(y: -2)
+          .background(.appYellow)
+          .clipShape(Capsule())
+        } else {
+          HStack {
+            Text("Pay before")
+              .cygre(.regular, 12)
+            Text("\(dueDate?.day ?? -1).\(Date().month)")
+              .cygre(.black, 12)
+          }
+          .foregroundStyle(.primary)
+          .padding(.vertical, 1)
+          .padding(.horizontal, 15)
+          .offset(y: -2)
+          .background(.appYellow)
+          .clipShape(Capsule())
+        }
+        case .oneTime:
+        if isShowLabel {
+          Text("Pay before")
+            .cygre(.regular, 14)
+            .foregroundStyle(.appYellow)
+          
+          Spacer()
+        }
+        
+        Text(dueDate?.dateMonthString ?? "")
+          .cygre(.black, 12)
+          .foregroundStyle(.primary)
+          .padding(.vertical, 1)
+          .padding(.horizontal, 15)
+          .offset(y: -2)
+          .background(.appYellow)
+          .clipShape(Capsule())
       }
     }
   }

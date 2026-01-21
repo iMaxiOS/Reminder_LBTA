@@ -10,9 +10,11 @@ import Foundation
 extension Decimal {
   var formatterWithoutDecimal: String {
     let formatter = NumberFormatter()
-    formatter.numberStyle = .decimal
+    formatter.locale = Locale(identifier: "en_US")
+    formatter.numberStyle = .currency
     formatter.groupingSeparator = " "
     formatter.maximumFractionDigits = 0
+    formatter.currencyCode = "USD"
     
     return formatter.string(from: self as NSNumber) ?? ""
   }

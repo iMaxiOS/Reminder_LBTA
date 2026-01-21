@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PaymentContentHeaderView: View {
   @Binding var payType: PayType
+  @Binding var monthAmount: Decimal
+  @Binding var oneTimeMonthAmount: Decimal
   
   var body: some View {
     VStack(alignment: .leading, spacing: 4) {
@@ -40,10 +42,16 @@ struct PaymentContentHeaderView: View {
       .cygre(.black, 12)
       
       HStack {
-        Text("$ 25,555")
-          .cygre(.black);
-        Text("/  Every month")
-          .cygre(.regular)
+        switch payType {
+        case .monthly:
+          Text("\(monthAmount.formatterWithoutDecimal)")
+            .cygre(.black)
+          Text("/  Every month")
+            .cygre(.regular)
+        case .oneTime:
+          Text("\(oneTimeMonthAmount.formatterWithoutDecimal)")
+            .cygre(.black)
+        }
       }
     }
     .padding(.top, 5)
@@ -51,5 +59,5 @@ struct PaymentContentHeaderView: View {
 }
 
 #Preview {
-  PaymentContentHeaderView(payType: .constant(.monthly))
+  PaymentContentHeaderView(payType: .constant(.monthly), monthAmount: .constant(222), oneTimeMonthAmount: .constant(322))
 }

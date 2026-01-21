@@ -33,4 +33,8 @@ class Assembly {
     let useCase = CreatePaymentUseCaseImp(repository: repository)
     return AddViewModel(createUseCase: useCase)
   }
+  
+  static func createDetailViewModel(payment: Payment) -> PaymentDetailViewModel {
+    return PaymentDetailViewModel(payment: payment)
+  }
 }

@@ -51,6 +51,12 @@ extension Date {
     return formatter.string(from: self)
   }
   
+  var fullDayAndMonthString: String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd MMMM"
+    return formatter.string(from: self)
+  }
+  
   var endOfMonth: Date {
     let calendar = Calendar.current
     return calendar.date(byAdding: .month, value: 1, to: startOfMonth)!

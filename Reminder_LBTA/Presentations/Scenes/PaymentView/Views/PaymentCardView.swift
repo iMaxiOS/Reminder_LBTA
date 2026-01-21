@@ -20,9 +20,9 @@ struct PaymentCardView: View {
         Text(payment.title)
           .cygre(.black, 24)
         HStack {
-          Text("$ \(payment.totalAmount.formatterWithoutDecimal)  /")
+          Text(payment.remainingAmount.formatterWithoutDecimal)
             .cygre(.black, 12)
-          Text("remainder")
+          Text("/ remainder")
             .cygre(.regular, 12)
         }
       }
@@ -31,37 +31,23 @@ struct PaymentCardView: View {
         .cygre(.regular, 14)
       
       HStack {
-        Text("$ \(payment.paymentAmount.formatterWithoutDecimal)  /")
-          .cygre(.black, 18)
-        Text("Month")
-          .cygre(.regular, 18)
+        if payment.type == .monthly {
+          Text(payment.paymentAmount.formatterWithoutDecimal)
+            .cygre(.black, 18)
+          Text("/ Month")
+            .cygre(.regular, 18)
+        }
         
         Spacer()
         
-        HStack {
-//          if payment.lastPay != nil {
-//            Text("Paid")
-//              .cygre(.regular, 12)
-//            Text(payment.lastPay?.dateMonthString ?? "")
-//              .cygre(.black, 12)
-//          } else {
-            Text("pay before")
-              .cygre(.regular, 12)
-            Text(payment.dueDate?.dateMonthString ?? "")
-              .cygre(.black, 12)
-//          }
-        }
-        .foregroundStyle(.primary)
-        .padding(.vertical, 1)
-        .padding(.horizontal, 15)
-        .offset(y: -2)
-        .background(.appYellow)
-        .clipShape(Capsule())
+        PaymentStatus(paymentType: payment.type, dueDate: payment.dueDate, lastPay: payment.lastPay, isShowLabel: false)
       }
       
       HStack {
-        SolidButton(text: "Pay", textColor: Color(.secondarySystemBackground), solidColor: .primary, isFull: true) {
-          setHandle()
+        if !(payment.lastPay?.isInSameMonth(date: .now) ?? false) {
+          SolidButton(text: "Pay", textColor: Color(.secondarySystemBackground), solidColor: .primary, isFull: true) {
+            setHandle()
+          }
         }
         
         SolidButton(text: "More details", textColor: .primary, backgroundColor: .clear, solidColor: .primary) {
@@ -71,7 +57,7 @@ struct PaymentCardView: View {
     }
     .padding(.top, 6)
     .padding([.horizontal, .bottom])
-    .background(.appRed)
+    .background(payment.lastPay?.isInSameMonth(date: Date.now) ?? false ? .appMint : .appRed)
     .clipShape(.rect(cornerRadius: 20))
   }
 }

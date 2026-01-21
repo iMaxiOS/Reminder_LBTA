@@ -22,7 +22,7 @@ struct Reminder_LBTAApp: App {
           .navigationDestination(for: NavigationType.self) { item in
             switch item {
             case .detail(let payment):
-              PaymentDetailView(path: $path, payment: payment)
+              PaymentDetailView(path: $path, vm: Assembly.createDetailViewModel(payment: payment))
             }
           }
       }
