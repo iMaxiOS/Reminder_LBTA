@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="24411" systemVersion="25C56" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="PaymentEntity" representedClassName="PaymentEntity" syncable="YES">
+        <attribute name="closeDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="createAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="descriptionText" attributeType="String"/>
         <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dueDay" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="isClose" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isNotificationEnable" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastPay" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="paymentAmount" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="remainingAmout" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="remainingAmount" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="totalAmount" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>

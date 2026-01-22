@@ -37,7 +37,7 @@ struct MainView: View {
             switch payType {
             case .monthly:
               ForEach(vm.payments.filter { $0.type == .monthly }) { payment in
-                PaymentCardView(path: $path, payment: payment) {
+                PaymentCardView(isPay: false, path: $path, payment: payment) {
                   Task {
                     await vm.set(payment: payment)
                   }
@@ -47,7 +47,7 @@ struct MainView: View {
               }
             case .oneTime:
               ForEach(vm.payments.filter { $0.type == .oneTime }) { payment in
-                PaymentCardView(path: $path, payment: payment) {
+                PaymentCardView(isPay: false, path: $path, payment: payment) {
                   Task {
                     await vm.set(payment: payment)
                   }

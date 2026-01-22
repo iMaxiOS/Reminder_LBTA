@@ -44,10 +44,6 @@ struct PaymentDetailView: View {
   }
 }
 
-#Preview {
-  PaymentDetailView(path: .constant(.init()), vm: PaymentDetailViewModel(payment: .init(id: "1", title: "Spotify Premium", type: .monthly, descriptionText: "Family plan for 6 accounts", totalAmount: 120, paymentAmount: 10, remainingAmount: 10000, dueDay: 15, isNotificationEnable: true, createAt: .now)))
-}
-
 private extension PaymentDetailView {
   var highSection: some View {
     VStack(alignment: .leading) {
@@ -203,4 +199,24 @@ struct PaymentStatus: View {
       }
     }
   }
+}
+
+#Preview {
+  PaymentDetailView(
+    path: .constant(.init()), vm: PaymentDetailViewModel(
+      payment: .init(
+        id: "1",
+        title: "Spotify Premium",
+        type: .monthly,
+        descriptionText: "Family plan for 6 accounts",
+        totalAmount: 120,
+        paymentAmount: 10,
+        remainingAmount: 10000,
+        dueDay: 15,
+        isNotificationEnable: true,
+        createAt: .now,
+        isClose: false,
+        closeDate: .now)
+    )
+  )
 }

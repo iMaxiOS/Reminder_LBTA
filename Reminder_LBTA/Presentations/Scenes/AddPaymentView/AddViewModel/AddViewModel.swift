@@ -46,7 +46,9 @@ class AddViewModel: ObservableObject {
         dueDate: date,
         isNotificationEnable: isPaymentNotification,
         createAt: .now,
-        lastPay: lastPayDate
+        lastPay: lastPayDate,
+        isClose: false,
+        closeDate: .now
       ))
       
       isAdded.toggle()

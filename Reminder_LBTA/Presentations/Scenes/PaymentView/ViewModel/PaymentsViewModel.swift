@@ -12,6 +12,7 @@ import Combine
 class PaymentsViewModel: ObservableObject {
   @Published var payments: [Payment] = []
   @Published var date: Date = .now
+  @Published var totalAmount = Decimal()
   
   private let useCase: FetchPaymentUseCase
   
@@ -23,6 +24,7 @@ class PaymentsViewModel: ObservableObject {
     do {
       let payments = try await useCase.fetchPayments(date: date)
       self.payments = payments
+      self.totalAmount = payments.reduce(0) { $0 + $1.paymentAmount }
     } catch {
       print(error.localizedDescription)
     }

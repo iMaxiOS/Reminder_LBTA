@@ -18,12 +18,14 @@ struct PaymentMapper {
       descriptionText: entity.descriptionText,
       totalAmount: entity.totalAmount as Decimal,
       paymentAmount: entity.paymentAmount as Decimal,
-      remainingAmount: entity.remainingAmout as Decimal,
+      remainingAmount: entity.remainingAmount as Decimal,
       dueDay: Int(entity.dueDay),
       dueDate: entity.dueDate,
       isNotificationEnable: entity.isNotificationEnable,
       createAt: entity.createAt,
-      lastPay: entity.lastPay
+      lastPay: entity.lastPay,
+      isClose: entity.isClose,
+      closeDate: entity.closeDate
     )
   }
   
@@ -35,12 +37,14 @@ struct PaymentMapper {
     entity.descriptionText = payment.descriptionText
     entity.totalAmount = payment.totalAmount as NSDecimalNumber
     entity.paymentAmount = payment.paymentAmount as NSDecimalNumber
-    entity.remainingAmout = payment.remainingAmount as NSDecimalNumber
+    entity.remainingAmount = payment.remainingAmount as NSDecimalNumber
     entity.dueDay = Int16(payment.dueDay)
     entity.dueDate = payment.dueDate
     entity.isNotificationEnable = payment.isNotificationEnable
     entity.createAt = payment.createAt
     entity.lastPay = payment.lastPay
+    entity.isClose = payment.isClose
+    entity.closeDate = payment.closeDate
     return entity
   }
 }

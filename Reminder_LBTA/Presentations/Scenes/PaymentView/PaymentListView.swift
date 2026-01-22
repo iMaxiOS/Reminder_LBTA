@@ -14,13 +14,20 @@ struct PaymentListView: View {
   
   var body: some View {
     ZStack(alignment: .top) {
-      PaymentHeaderView(content: .init(amount: "122 546 $", title: "Payments", image: "calendar", pageType: .payments), date: Binding<Date?>(get: { vm.date }, set: { vm.date = $0 ?? vm.date }))
+      PaymentHeaderView(
+        content: HeaderContent(
+          amount: vm.totalAmount.formatterWithoutDecimal,
+          title: "Payments",
+          image: "calendar",
+          pageType: .payments
+        ), date: Binding<Date?>(get: { vm.date }, set: { vm.date = $0 ?? vm.date })
+      )
       
       ScrollView(showsIndicators: false) {
         LazyVStack(spacing: 16) {
           ForEach(vm.payments) { payment in
-            PaymentCardView(path: $path, payment: payment) {
-              //set 
+            PaymentCardView(isPay: true, path: $path, payment: payment) {
+              //set
             } moreHandle: {
               path.append(NavigationType.detail(payment: payment))
             }

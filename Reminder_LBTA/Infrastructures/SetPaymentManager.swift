@@ -21,20 +21,26 @@ class SetPaymentManager: SetPaymentDataSource {
       contextPayment.lastPay = .now
       
       if contextPayment.type == 0 {
-        var remainingAmount = contextPayment.remainingAmout.decimalValue
+        var remainingAmount = contextPayment.remainingAmount.decimalValue
         let paymentAmount = contextPayment.paymentAmount.decimalValue
         remainingAmount -= paymentAmount
-        if remainingAmount < 0 {
-          contextPayment.remainingAmout = .zero
+        if remainingAmount <= 0 {
+          closePaymentIsRemainingAmountZero(with: contextPayment)
         } else {
-          contextPayment.remainingAmout = NSDecimalNumber(decimal: remainingAmount)
+          contextPayment.remainingAmount = NSDecimalNumber(decimal: remainingAmount)
         }
       } else {
-        contextPayment.remainingAmout = .zero
-        contextPayment.isNotificationEnable = false
+        closePaymentIsRemainingAmountZero(with: contextPayment)
       }
     }
     
     try context.save()
+  }
+  
+  func closePaymentIsRemainingAmountZero(with contextPayment: PaymentEntity) {
+    contextPayment.closeDate = .now
+    contextPayment.isClose = true
+    contextPayment.remainingAmount = .zero
+    contextPayment.isNotificationEnable = false
   }
 }

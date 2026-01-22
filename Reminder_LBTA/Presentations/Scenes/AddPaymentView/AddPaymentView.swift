@@ -44,11 +44,11 @@ private extension AddPaymentView {
           .padding(.top)
         
         HStack(spacing: 16) {
-          SolidButton(text: "Every month", textColor: .appYellow, solidColor: .appYellow, isFull: vm.payType == .monthly) {
+          SolidButton(text: "Every month", textColor: Color(.secondarySystemBackground), solidColor: .appYellow, isFull: vm.payType == .monthly) {
             vm.payType = .monthly
           }
           
-          SolidButton(text: "One time", textColor: .appYellow, solidColor: .appYellow, isFull: vm.payType == .oneTime) {
+          SolidButton(text: "One time", textColor: Color(.secondarySystemBackground), solidColor: .appYellow, isFull: vm.payType == .oneTime) {
             vm.payType = .oneTime
           }
         }

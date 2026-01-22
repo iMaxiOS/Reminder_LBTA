@@ -20,6 +20,6 @@ struct Payment: Identifiable, Hashable {
   var isNotificationEnable: Bool
   var createAt: Date
   var lastPay: Date?
-  
-  var oneTimeRemainderAmount: Decimal? { type == .oneTime ? (totalAmount + remainingAmount) : nil }
+  var isClose: Bool
+  var closeDate: Date?
 }

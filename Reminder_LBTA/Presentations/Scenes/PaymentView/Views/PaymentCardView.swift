@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct PaymentCardView: View {
+  @State var isPay: Bool
   @Binding var path: NavigationPath
   
   var payment: Payment
   var setHandle: () -> Void
   var moreHandle: () -> Void
+  var checkIsPay: Bool {
+    !isPay && !(payment.lastPay?.isInSameMonth(date: Date.now) ?? false)
+  }
   
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
@@ -44,9 +48,10 @@ struct PaymentCardView: View {
       }
       
       HStack {
-        if !(payment.lastPay?.isInSameMonth(date: .now) ?? false) {
+        if checkIsPay {
           SolidButton(text: "Pay", textColor: Color(.secondarySystemBackground), solidColor: .primary, isFull: true) {
             setHandle()
+            isPay.toggle()
           }
         }
         
@@ -57,13 +62,22 @@ struct PaymentCardView: View {
     }
     .padding(.top, 6)
     .padding([.horizontal, .bottom])
-    .background(payment.lastPay?.isInSameMonth(date: Date.now) ?? false ? .appMint : .appRed)
+    .background(checkIsPayColor())
     .clipShape(.rect(cornerRadius: 20))
+  }
+  
+  func checkIsPayColor() -> Color {
+    if isPay || payment.lastPay?.isInSameMonth(date: Date.now) ?? false {
+      return .appMint
+    }
+    
+    return .appRed
   }
 }
 
 #Preview {
   PaymentCardView(
+    isPay: false,
     path: .constant(.init()),
     payment: .init(
       id: "1",
@@ -75,7 +89,9 @@ struct PaymentCardView: View {
       remainingAmount: 15,
       dueDay: 15,
       isNotificationEnable: true,
-      createAt: .now
+      createAt: .now,
+      isClose: false,
+      closeDate: .now
     ),
     setHandle: {},
     moreHandle: {}
