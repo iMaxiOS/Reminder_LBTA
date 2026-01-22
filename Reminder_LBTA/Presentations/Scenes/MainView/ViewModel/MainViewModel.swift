@@ -27,7 +27,7 @@ class MainViewModel: ObservableObject {
     do {
       let payments = try await useCase.fetchPayments(date: nil)
       self.payments = payments
-      self.totalRemainderAmount = payments.reduce(0) { $0 + $1.remainingAmount }
+      self.totalRemainderAmount = payments.reduce(0) { $0 + $1.totalAmount }
       self.oneMonthRemainderAmount = payments.reduce(0) { $0 + $1.paymentAmount }
       self.oneTimeRemainderAmount = payments.filter { $0.type == .oneTime }.reduce(0) { $0 + $1.totalAmount }
     } catch {

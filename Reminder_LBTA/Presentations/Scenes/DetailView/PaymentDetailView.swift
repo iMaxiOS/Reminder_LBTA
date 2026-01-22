@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PaymentDetailView: View {
   @Binding var path: NavigationPath
-  
   @StateObject var vm: PaymentDetailViewModel
   
   init(path: Binding<NavigationPath>, vm: PaymentDetailViewModel) {
@@ -33,7 +32,10 @@ struct PaymentDetailView: View {
       .toolbar {
         ToolbarItem(placement: .topBarTrailing) {
           Button {
-            // remove item
+            Task {
+              await vm.deletePayment()
+              path.removeLast()
+            }
           } label: {
             Image(systemName: "trash")
               .tint(.appYellow)
@@ -126,9 +128,19 @@ private extension PaymentDetailView {
   var solidButtons: some View {
     VStack {
       SolidButton(text: "Close early", textColor: .primary, solidColor: .appYellow, isFull: true) {
+        Task {
+          await vm.closePayment()
+        }
+        
+        path.removeLast()
       }
       
       SolidButton(text: "Delete last payment", textColor: .appYellow, solidColor: .appYellow) {
+        Task {
+          await vm.deleteLastPayment()
+        }
+        
+        path.removeLast()
       }
     }
   }
@@ -179,7 +191,7 @@ struct PaymentStatus: View {
           .background(.appYellow)
           .clipShape(Capsule())
         }
-        case .oneTime:
+      case .oneTime:
         if isShowLabel {
           Text("Pay before")
             .cygre(.regular, 14)
@@ -203,20 +215,19 @@ struct PaymentStatus: View {
 
 #Preview {
   PaymentDetailView(
-    path: .constant(.init()), vm: PaymentDetailViewModel(
-      payment: .init(
-        id: "1",
-        title: "Spotify Premium",
-        type: .monthly,
-        descriptionText: "Family plan for 6 accounts",
-        totalAmount: 120,
-        paymentAmount: 10,
-        remainingAmount: 10000,
-        dueDay: 15,
-        isNotificationEnable: true,
-        createAt: .now,
-        isClose: false,
-        closeDate: .now)
-    )
+    path: .constant(.init()),
+    vm: Assembly.paymentDetailViewModel(payment: .init(
+      id: "1",
+      title: "Spotify Premium",
+      type: .monthly,
+      descriptionText: "Family plan for 6 accounts",
+      totalAmount: 120,
+      paymentAmount: 10,
+      remainingAmount: 10000,
+      dueDay: 15,
+      isNotificationEnable: true,
+      createAt: .now,
+      isClose: false,
+      closeDate: .now))
   )
 }

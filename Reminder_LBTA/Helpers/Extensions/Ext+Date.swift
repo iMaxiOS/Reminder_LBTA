@@ -67,4 +67,8 @@ extension Date {
     return calendar.component(.month, from: self) == calendar.component(.month, from: date) &&
            calendar.component(.year, from: self) == calendar.component(.year, from: date)
   }
+  
+  func minus(days: Int) -> Date {
+    Calendar.current.date(byAdding: .month, value: days, to: self) ?? self
+  }
 }

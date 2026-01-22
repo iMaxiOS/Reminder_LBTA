@@ -24,7 +24,7 @@ struct PaymentCardView: View {
         Text(payment.title)
           .cygre(.black, 24)
         HStack {
-          Text(payment.remainingAmount.formatterWithoutDecimal)
+          Text(payment.totalAmount.formatterWithoutDecimal)
             .cygre(.black, 12)
           Text("/ remainder")
             .cygre(.regular, 12)
