@@ -15,7 +15,7 @@ class CreatePaymentRepositoryImp: CreatePaymentRepository {
     self.dataSource = dataSource
   }
   
-  func create(payment: Payment) throws {
-    try dataSource.createNewPayment(payment: payment)
+  func create(payment: Payment) async throws {
+    try await dataSource.createNewPayment(payment: payment)
   }
 }

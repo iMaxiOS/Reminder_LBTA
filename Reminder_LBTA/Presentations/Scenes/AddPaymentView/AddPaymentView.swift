@@ -27,6 +27,14 @@ struct AddPaymentView: View {
         AddSuccessView()
       }
     }
+    .onTapGesture {
+      UIApplication.shared.sendAction(
+        #selector(UIResponder.resignFirstResponder),
+        to: nil,
+        from: nil,
+        for: nil
+      )
+    }
   }
 }
 
@@ -147,7 +155,9 @@ private extension AddPaymentView {
     .padding(.bottom, 60)
     .overlay(alignment: .bottom) {
       SolidButton(text: "Add", textColor: .appBack, solidColor: .appYellow, isFull: true) {
-        vm.createNewPayment()
+        Task {
+          await vm.createNewPayment()
+        }
       }
       .padding(.horizontal, 16)
     }

@@ -8,8 +8,10 @@
 import Foundation
 import Combine
 
+@MainActor
 class AddViewModel: ObservableObject {
   private let createUseCase: CreatePaymentUseCase
+  private let notificationUseCase: NotificationUseCase
   
   @Published var date: Date = Date.now
   @Published var isPaymentNotification: Bool = false
@@ -22,20 +24,26 @@ class AddViewModel: ObservableObject {
   @Published var totalAmount: String = ""
   @Published var remainingAmount: String = ""
   
-  init(createUseCase: CreatePaymentUseCase) {
+  init(createUseCase: CreatePaymentUseCase, notificationUseCase: NotificationUseCase) {
     self.createUseCase = createUseCase
+    self.notificationUseCase = notificationUseCase
   }
   
-  func createNewPayment() {
+  func createNewPayment() async {
     do {
       var lastPayDate: Date? = nil
+      let paymentID = UUID().uuidString
       
       if payType == .monthly {
         lastPayDate = Date.now
       }
       
-      try createUseCase.execute(payment: Payment(
-        id: UUID().uuidString,
+      if isPaymentNotification {
+        try await addNotification(item: .init(id: paymentID, amount: paymentAmount, date: date, payType: payType))
+      }
+      
+      try await createUseCase.execute(payment: Payment(
+        id: paymentID,
         title: paymentName,
         type: payType,
         descriptionText: description,
@@ -55,5 +63,9 @@ class AddViewModel: ObservableObject {
     } catch {
       print(error.localizedDescription)
     }
+  }
+  
+  private func addNotification(item: Notification) async throws {
+    try await notificationUseCase.createNotification(item: item)
   }
 }

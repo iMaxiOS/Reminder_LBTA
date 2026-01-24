@@ -40,7 +40,9 @@ struct PaymentListView: View {
     .padding(.horizontal)
     .background(.appBack)
     .onChange(of: vm.date) { newValue in
-      Task { await vm.fetchPayments() }
+      Task {
+        await vm.fetchPayments()
+      }
     }
     .task {
       await vm.fetchPayments()

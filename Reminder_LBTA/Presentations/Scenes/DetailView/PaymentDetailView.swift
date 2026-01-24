@@ -120,7 +120,6 @@ private extension PaymentDetailView {
             .fill(vm.payment.isNotificationEnable ? .appYellow : .clear)
             .frame(width: 16, height: 16)
         }
-        
       }
     }
   }
@@ -181,7 +180,7 @@ struct PaymentStatus: View {
           HStack {
             Text("Pay before")
               .cygre(.regular, 12)
-            Text("\(dueDate?.day ?? -1).\(Date().month)")
+            Text("\(Date().clampedDay(dueDate?.day ?? 0)).\(Date().month)")
               .cygre(.black, 12)
           }
           .foregroundStyle(.primary)

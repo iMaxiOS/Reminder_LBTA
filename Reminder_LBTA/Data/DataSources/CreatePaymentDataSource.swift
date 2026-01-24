@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CreatePaymentDataSource: AnyObject {
-  func createNewPayment(payment: Payment) throws
+  func createNewPayment(payment: Payment) async throws
 }
 
 

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CreatePaymentUseCase: AnyObject {
-  func execute(payment: Payment) throws
+  func execute(payment: Payment) async throws
 }
 
 class CreatePaymentUseCaseImp: CreatePaymentUseCase {
@@ -18,8 +18,8 @@ class CreatePaymentUseCaseImp: CreatePaymentUseCase {
     self.repository = repository
   }
   
-  func execute(payment: Payment) throws {
-    try repository.create(payment: payment)
+  func execute(payment: Payment) async throws {
+    try await repository.create(payment: payment)
   }
 }
 

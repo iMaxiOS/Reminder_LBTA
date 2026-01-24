@@ -6,15 +6,12 @@
 //
 
 import CoreData
-
 class CreatePaymentManager: CreatePaymentDataSource {
   
   let context = PersistenceContainer.shared.persistentContainer.viewContext
   
-  func createNewPayment(payment: Payment) throws {
+  func createNewPayment(payment: Payment) async throws {
     let _ = PaymentMapper.toEntity(from: payment, context: context)
     try context.save()
   }
 }
-
-

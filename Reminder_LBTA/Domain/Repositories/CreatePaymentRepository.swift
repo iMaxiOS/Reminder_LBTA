@@ -8,6 +8,6 @@
 import Foundation
 
 protocol CreatePaymentRepository: AnyObject {
-  func create(payment: Payment) throws
+  func create(payment: Payment) async throws
 }
 
